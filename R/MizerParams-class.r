@@ -245,8 +245,11 @@ valid_MizerParams <- function(object) {
 #'
 #' Although it is possible to build a \code{MizerParams} object by hand it is not recommended and several constructors are available.
 #'
-#' The \code{MizerParams} class does not hold any dynamic information, e.g. abundances or harvest effort through time. These are held in \linkS4class{MizerSim} objects.
-#' @seealso \code{\link{project}} \linkS4class{MizerSim}
+#' The \code{MizerParams} class does not hold any dynamic information, e.g. abundances or harvest effort through time. These are held in \code{\link{MizerSim}} objects.
+#' @name MizerParams-class
+#' @rdname MizerParams-class
+#' @docType class
+#' @seealso \code{\link{project}} \code{\link{MizerSim}}
 #' @export
 setClass("MizerParams",
     representation(
@@ -329,16 +332,23 @@ setClass("MizerParams",
 #' An additional constructor method which takes an integer of the number of species in the model. This is only used in internally to set up a \code{MizerParams} object with the correct dimensions. It is not recommended that this method is used by users.
 #' @seealso \code{\link{project}} \linkS4class{MizerSim}
 #' @export
+#' @docType methods
+#' @rdname MizerParams-methods
+#' @aliases MizerParams-method
 #' @examples
 #' data(NS_species_params_gears)
 #' data(inter)
 #' params <- MizerParams(NS_species_params_gears, inter)
+
+
+
 setGeneric('MizerParams', function(object, interaction, ...)
     standardGeneric('MizerParams'))
 
 # Basic constructor with only the number of species as dispatching argument
 # Only really used to make MizerParams of the right size and shouldn't be used by user
-#' @rdname MizerParams
+#' @rdname MizerParams-methods
+#' @aliases MizerParams,numeric,missing-method
 setMethod('MizerParams', signature(object='numeric', interaction='missing'),
     function(object, min_w = 0.001, max_w = 1000, no_w = 100,  min_w_pp = 1e-10, no_w_pp = round(no_w)*0.3, species_names=1:object, gear_names=species_names){
 	#args <- list(...)
@@ -397,7 +407,8 @@ setMethod('MizerParams', signature(object='numeric', interaction='missing'),
 
 # Constructor that takes the species_params data.frame and the interaction matrix
 
-#' @rdname MizerParams
+#' @rdname MizerParams-methods
+#' @aliases MizerParams,data.frame,matrix-method
 setMethod('MizerParams', signature(object='data.frame', interaction='matrix'),
     function(object, interaction,  n = 2/3, p = 0.7, q = 0.8, r_pp = 10, kappa = 1e11, lambda = (2+q-n), w_pp_cutoff = 10, max_w = max(object$w_inf)*1.1, f0 = 0.6, z0pre = 0.6, z0exp = n-1, ...){
 
@@ -548,7 +559,8 @@ setMethod('MizerParams', signature(object='data.frame', interaction='matrix'),
 )
 
 # If interaction is missing, make one of the right size and fill with 1s
-#' @rdname MizerParams
+#' @rdname MizerParams-methods
+#' @aliases MizerParams,data.frame,missing-method
 setMethod('MizerParams', signature(object='data.frame', interaction='missing'),
     function(object, ...){
 	interaction <- matrix(1,nrow=nrow(object), ncol=nrow(object))

@@ -98,7 +98,7 @@ valid_MizerSim <- function(object){
 #' 
 #' A class that holds the results of projecting a \linkS4class{MizerParams} object through time.
 #'
-#' \code{MizerSim} objects are created by using the \code{\link{project}} method on an object of type \linkS4class{MizerParams}.
+#' \code{MizerSim} objects are created by using the \code{\link{project}} method on an object of type \code{MizerParams}.
 #'
 #' There are several plotting methods available to explore the contents of a \code{MizerSim} object. See the package vignette for more details.
 #' 
@@ -107,7 +107,10 @@ valid_MizerSim <- function(object){
 #' @slot effort Array that stores the fishing effort through time by time and gear
 #' @slot n_pp Array that stores the projected background population by time and size
 #'
-#' @seealso \code{\link{project}} \linkS4class{MizerParams}
+#' @name MizerSim-class
+#' @rdname MizerSim-class
+#' @docType class
+#' @seealso \code{\link{project}} \code{\link{MizerParams}}
 #' @export
 setClass("MizerSim",
     representation(
@@ -133,7 +136,7 @@ remove(valid_MizerSim)
 
 #' Constructor for the \code{MizerSim} class
 #'
-#' A constructor for the \linkS4class{MizerSim} class. This is used by the \code{\link{project}} method to create \code{MizerSim} objects of the right dimensions.
+#' A constructor for the \code{MizerSim} class. This is used by the \code{project} method to create \code{MizerSim} objects of the right dimensions.
 #' It is not necessary for users to use this constructor.
 #' 
 #' @param object a \linkS4class{MizerParams} object 
@@ -144,6 +147,9 @@ remove(valid_MizerSim)
 #' @return An object of type \linkS4class{MizerSim}
 #' @seealso \code{\link{project}} \linkS4class{MizerParams} \linkS4class{MizerSim}
 #' @export
+#' @docType methods
+#' @rdname MizerSim-methods
+#' @aliases MizerSim-method
 #' @examples
 #' \dontrun{
 #' data(NS_species_params_gears)
@@ -151,9 +157,12 @@ remove(valid_MizerSim)
 #' params <- MizerParams(NS_species_params_gears, inter)
 #' sim <- project(params)
 #' }
+
 setGeneric('MizerSim', function(object, ...)
     standardGeneric('MizerSim'))
 
+#' @rdname MizerSim-methods
+#' @aliases MizerSim,MizerParams-method
 setMethod('MizerSim', signature(object='MizerParams'),
     function(object, t_dimnames = NA, t_max = 100, t_save=1){
         # If the dimnames for the time dimension not passed in, calculate them from t_max and t_save 
