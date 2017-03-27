@@ -638,7 +638,7 @@ setMethod('MizerParams', signature(object='data.frame', interaction='matrix'),
             rr <- dx*ceiling(rr/dx)
             
             # Determine period used
-            P <- max(x[length(x)] + 2*rr)
+            P <- max(x[length(x)] + rr)
             
             # Determine number of x points used in period
             no_P <- 1+ceiling(P/dx)  # P/dx should already be integer
